@@ -8,7 +8,7 @@ const initialState = {
 export default function (state = initialState, action, payload) {
   switch (action.type) {
     case USER_FETCH:
-        state {spinner: true};
+        state{spinner: true};
       break;
       case USER_FETCH_COMPLETE:
           state{user: payload}
