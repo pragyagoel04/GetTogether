@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-native-community/cli-debugger-ui": "^4.2.1",
     "firebase": "^7.13.1",
+    "prop-types": "^15.7.2",
     "react": "16.11.0",
     "react-native": "0.62.0",
     "react-redux": "^7.2.0",

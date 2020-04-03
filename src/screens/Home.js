@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
 
 import {Text, View, TextInput, Button, StyleSheet} from 'react-native';
-
-import firebase from '../config';
+import {createUser} from '../actions/userActions';
 
 import {connect} from 'react-redux';
 
 class Home extends Component {
+  state = {
+    email: '',
+    password: '',
+  };
+
   handleEmailChange(text) {
     this.setState({email: text});
   }
@@ -17,25 +21,16 @@ class Home extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(
-        this.props.user.email,
-        this.props.user.password,
-      )
-      .then((createdUser) => {
-        console.log(createdUser);
-        this.props.createUser(createdUser);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    this.props.createUser(this.state.email, this.state.password);
   }
 
   render() {
+    console.log('props: ', this.props);
     return (
       <View style={styles.container}>
+        {typeof this.props.user !== 'undefined' && (
+          <Text>Logged in user: {this.props.user.email}</Text>
+        )}
         <TextInput
           autoCapitalize="none"
           name="email"
@@ -62,9 +57,9 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, {createUser})(Home);
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
