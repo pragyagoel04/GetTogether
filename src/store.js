@@ -1,14 +1,26 @@
 import {createStore, applyMiddleware, compose} from 'redux';
 import rootReducer from './reducers';
-import thunk from 'redux-thunk';
+import thunkMiddleware from 'redux-thunk';
 
-const initialState = {};
-const middleware = [thunk];
+import createEngine from 'redux-storage-engine-reactnativeasyncstorage';
+import * as storage from 'redux-storage';
+
+const engine = createEngine('gettogether');
+const storageMiddleware = storage.createMiddleware(engine);
 
 const store = createStore(
   rootReducer,
-  initialState,
-  applyMiddleware(...middleware),
+  compose(
+    applyMiddleware(thunkMiddleware),
+    applyMiddleware(storageMiddleware),
+    //window.__REDUX_DEVTOOLS_EXTENSION__ &&
+    // window.__REDUX_DEVTOOLS_EXTENSION__(),
+  ),
 );
 
-export default store;
+const load = storage.createLoader(engine);
+load(store)
+  .then((newState) => console.log('Loaded state:', newState))
+  .catch(() => console.log('Failed to load previous state'));
+
+export {store};

@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux';
 import userReducer from './userReducer';
+import * as storage from 'redux-storage';
 
-export default combineReducers({userReducer});
+export default storage.reducer(combineReducers({user: userReducer}));

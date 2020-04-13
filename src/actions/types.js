@@ -1,2 +1,5 @@
 export const USER_FETCH = 'USER_FETCH';
 export const USER_FETCH_COMPLETE = 'USER_FETCH_COMPLETE';
+export const USER_FETCH_ERROR = 'USER_FETCH_ERROR';
+
+export const EVENT_LIST_FETCH = 'EVENT_LIST_FETCH';
